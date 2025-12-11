@@ -1,6 +1,4 @@
 name = "html-to-pdf-generator"
 main = "index.js"
 compatibility_date = "2024-12-01"
-
-# Use THIS configuration for the new Browser Rendering API
 browser = { binding = "BROWSER" }

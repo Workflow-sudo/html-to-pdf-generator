@@ -1,7 +1,7 @@
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     try {
-      const { html } = await request.json();
+      const { html, timeout = 30000 } = await request.json();
 
       if (!html) {
         return new Response(JSON.stringify({ error: "Missing HTML" }), {
@@ -10,8 +10,14 @@ export default {
         });
       }
 
-      // Start Browser Session
+      // Start Browser Session WITH timeout
       const session = await env.BROWSER.newSession();
+      
+      // Set timeout for the entire operation
+      ctx.waitUntil((async () => {
+        await new Promise(resolve => setTimeout(resolve, timeout));
+        try { await session.end(); } catch {}
+      })());
 
       await session.navigate("data:text/html," + encodeURIComponent(html));
       await session.waitForLoad();

@@ -1,7 +1,7 @@
-name = "html_to_pdf-generator"
+name = "html-to-pdf-generator"
 main = "index.js"
 compatibility_date = "2024-12-01"
 
-services = [
-  { binding = "BROWSER", service = "browser-rendering-api" }
-]
+[[services]]
+binding = "BROWSER"
+service = "browser-rendering-api"
